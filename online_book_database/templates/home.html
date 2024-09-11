@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Online Book Database</title>
+    {% load static %} <!-- Load the static template tag library -->
+    <link rel="stylesheet" href="{% static 'styles.css' %}"> <!-- Link to a CSS file if you have one -->
+</head>
+<body>
+    {% include 'header.html' %} <!-- Include the header template -->
+    <main>
+        <section>
+            <h2>Your Book Collection</h2>
+            <p>Manage your book collection, keep track of your reading progress, and share your reviews.</p>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Online Book Database. All rights reserved.</p>
+    </footer>
+</body>
+</html>
+
