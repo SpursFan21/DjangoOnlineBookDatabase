@@ -3,7 +3,7 @@ from django.contrib.auth import login as auth_login, authenticate, logout as aut
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .forms import RegisterForm, LoginForm, UserProfileForm, PasswordChangeForm
-from books.models import Book  # Import the Book model
+from books.models import Book, Review  # Import the Book and Review models
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -62,13 +62,15 @@ def account(request):
         profile_form = UserProfileForm(instance=request.user)
         password_form = PasswordChangeForm(user=request.user)
 
-    # Fetch the books associated with the logged-in user
+    # Fetch the books and reviews associated with the logged-in user
     books = Book.objects.filter(user=request.user)
+    reviews = Review.objects.filter(user=request.user)
 
     return render(request, 'account.html', {
         'profile_form': profile_form,
         'password_form': password_form,
         'books': books,  # Pass the books to the template
+        'reviews': reviews,  # Pass the reviews to the template
     })
 
 # Logout view
@@ -101,4 +103,5 @@ class TokenRefreshView(APIView):
             }, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({'detail': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
 

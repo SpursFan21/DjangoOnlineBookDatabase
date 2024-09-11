@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import Book
-from .forms import BookForm
+from .forms import BookForm, ReviewForm
 from accounts.forms import UserProfileForm, PasswordChangeForm  # Correct import
 
 @login_required
@@ -26,3 +26,19 @@ def account(request):
     profile_form = UserProfileForm(instance=request.user)
     password_form = PasswordChangeForm(user=request.user)
     return render(request, 'account.html', {'profile_form': profile_form, 'password_form': password_form, 'books': books})
+
+@login_required
+def add_review(request):
+    if request.method == 'POST':
+        form = ReviewForm(request.POST, user=request.user)
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.user = request.user
+            review.save()
+            messages.success(request, 'Your review has been added successfully!')
+            return redirect('account')
+    else:
+        form = ReviewForm(user=request.user)
+
+    return render(request, 'add_review.html', {'form': form})
+
