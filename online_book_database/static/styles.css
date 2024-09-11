@@ -16,11 +16,13 @@ body {
     background-color: #f4f4f4;
 }
 
+/* Header Styles */
 header {
     background: #333;
     color: #fff;
     padding: 1rem;
     text-align: center;
+    position: relative;
 }
 
 header h1 {
@@ -47,6 +49,22 @@ nav ul li a:hover {
     text-decoration: underline;
 }
 
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-left: 15px;
+    font-size: 14px;
+    color: white;
+    background-color: #007bff;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
+
+/* Main Content */
 main {
     padding: 2rem;
     max-width: 1200px;
@@ -57,6 +75,96 @@ section {
     margin-bottom: 2rem;
 }
 
+/* Book Details Page */
+.book-details {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.book-details img {
+    max-width: 300px;
+    height: auto;
+    display: block;
+    margin-top: 20px;
+}
+
+.book-details h1 {
+    font-size: 28px;
+    margin-bottom: 10px;
+}
+
+.book-details p {
+    font-size: 16px;
+    margin: 5px 0;
+}
+
+/* Update Form */
+.update-form {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.update-form h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.update-form form {
+    display: flex;
+    flex-direction: column;
+}
+
+.update-form form div {
+    margin-bottom: 15px;
+}
+
+.update-form form label {
+    font-weight: bold;
+}
+
+.update-form form input,
+.update-form form select,
+.update-form form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.update-form form button {
+    align-self: flex-start;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: white;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.update-form form button:hover {
+    background-color: #0056b3;
+}
+
+/* Footer Styles */
+footer {
+    background: #333;
+    color: #fff;
+    text-align: center;
+    padding: 1rem;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+/* Form Styles */
 form {
     background: #fff;
     padding: 1rem;
@@ -92,16 +200,29 @@ form button:hover {
     background: #555;
 }
 
-footer {
-    background: #333;
-    color: #fff;
-    text-align: center;
-    padding: 1rem;
+/* Messages */
+.message {
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    display: none;
     position: fixed;
-    bottom: 0;
-    width: 100%;
+    top: 10px;
+    right: 10px;
+    z-index: 1000;
 }
 
+.message.success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.message.error {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+/* Responsive Styles */
 @media (max-width: 768px) {
     nav ul li {
         display: block;
@@ -114,3 +235,4 @@ footer {
         text-align: center;
     }
 }
+

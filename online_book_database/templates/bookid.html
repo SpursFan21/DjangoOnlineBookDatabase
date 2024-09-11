@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ book.title }} - Online Book Database</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Online Book Database</h1>
+        <nav>
+            <ul>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'account' %}">Account</a></li>
+                <li><a href="{% url 'logout' %}">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="book-details">
+        <h1>{{ book.title }}</h1>
+        <p><strong>Author:</strong> {{ book.author }}</p>
+        <p><strong>Description:</strong> {{ book.description }}</p>
+        <p><strong>Publisher:</strong> {{ book.publisher }}</p>
+        <p><strong>Status:</strong> {{ book.get_reading_status_display }}</p>
+        {% if book.image %}
+            <img src="{{ book.image.url }}" alt="{{ book.title }} image">
+        {% endif %}
+
+        <h2>Reviews</h2>
+        {% if review %}
+            <p><strong>Rating:</strong> {{ review.rating }}</p>
+            <p><strong>Review:</strong> {{ review.text }}</p>
+        {% else %}
+            <p>No reviews yet.</p>
+        {% endif %}
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Online Book Database. All rights reserved.</p>
+    </footer>
+</body>
+</html>
+
