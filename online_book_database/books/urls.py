@@ -1,7 +1,6 @@
 from django.urls import path
-from . import views
+from .views import add_book
 
 urlpatterns = [
-    # Placeholder path
-    path('', views.index, name='books_index'),
+    path('add_book/', add_book, name='add_book'),
 ]
