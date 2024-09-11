@@ -3,6 +3,7 @@ from django.contrib.auth import login as auth_login, authenticate, logout as aut
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .forms import RegisterForm, LoginForm, UserProfileForm, PasswordChangeForm
+from books.models import Book  # Import the Book model
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -56,12 +57,19 @@ def account(request):
             else:
                 messages.error(request, 'Old password is incorrect.')
                 return render(request, 'account.html', {'profile_form': profile_form, 'password_form': password_form})
-            
+
     else:
         profile_form = UserProfileForm(instance=request.user)
         password_form = PasswordChangeForm(user=request.user)
 
-    return render(request, 'account.html', {'profile_form': profile_form, 'password_form': password_form})
+    # Fetch the books associated with the logged-in user
+    books = Book.objects.filter(user=request.user)
+
+    return render(request, 'account.html', {
+        'profile_form': profile_form,
+        'password_form': password_form,
+        'books': books,  # Pass the books to the template
+    })
 
 # Logout view
 def logout_view(request):
@@ -93,3 +101,4 @@ class TokenRefreshView(APIView):
             }, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({'detail': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+

@@ -36,6 +36,13 @@
         .book-item {
             padding: 10px;
             border-bottom: 1px solid #ccc;
+            display: flex;
+            align-items: center;
+        }
+        .book-item img {
+            max-width: 100px;
+            max-height: 150px;
+            margin-right: 15px;
         }
     </style>
 </head>
@@ -59,9 +66,14 @@
             {% if books %}
                 {% for book in books %}
                     <div class="book-item">
-                        <strong>{{ book.title }}</strong> by {{ book.author }}
-                        <p>{{ book.description }}</p>
-                        <p>Status: {{ book.get_reading_status_display }}</p>
+                        {% if book.image %}
+                            <img src="{{ book.image.url }}" alt="{{ book.title }} cover">
+                        {% endif %}
+                        <div>
+                            <strong>{{ book.title }}</strong> by {{ book.author }}
+                            <p>{{ book.description }}</p>
+                            <p>Status: {{ book.get_reading_status_display }}</p>
+                        </div>
                     </div>
                 {% endfor %}
             {% else %}
@@ -139,3 +151,4 @@
     </script>
 </body>
 </html>
+
