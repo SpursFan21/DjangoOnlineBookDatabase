@@ -4,7 +4,6 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import Book, Review
 from .forms import BookForm, ReviewForm
-from accounts.forms import UserProfileForm, PasswordChangeForm  # Correct import
 
 @login_required
 def add_book(request):
@@ -20,13 +19,6 @@ def add_book(request):
         form = BookForm()
 
     return render(request, 'add_book.html', {'form': form})
-
-@login_required
-def account(request):
-    books = Book.objects.filter(user=request.user)  # Get the books added by the user
-    profile_form = UserProfileForm(instance=request.user)
-    password_form = PasswordChangeForm(user=request.user)
-    return render(request, 'account.html', {'profile_form': profile_form, 'password_form': password_form, 'books': books})
 
 @login_required
 def add_review(request):
@@ -68,4 +60,3 @@ def update_book(request, book_id):
     else:
         form = BookForm(instance=book)
     return render(request, 'update_book.html', {'form': form, 'book': book})
-

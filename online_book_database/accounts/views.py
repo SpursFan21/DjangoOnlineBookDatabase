@@ -39,19 +39,17 @@ def account(request):
         profile_form = UserProfileForm(request.POST, instance=request.user)
         password_form = PasswordChangeForm(user=request.user, data=request.POST)
 
-        # Handle profile update
         if profile_form.is_valid():
             profile_form.save()
             messages.success(request, 'Your profile has been updated successfully!')
 
-        # Handle password change
         if password_form.is_valid():
             old_password = password_form.cleaned_data['old_password']
             new_password1 = password_form.cleaned_data['new_password1']
             if authenticate(username=request.user.username, password=old_password):
                 request.user.set_password(new_password1)
                 request.user.save()
-                auth_login(request, request.user)  # Re-login the user
+                auth_login(request, request.user)
                 messages.success(request, 'Your password has been updated successfully!')
                 return redirect('account')
             else:
@@ -62,15 +60,17 @@ def account(request):
         profile_form = UserProfileForm(instance=request.user)
         password_form = PasswordChangeForm(user=request.user)
 
-    # Fetch the books and reviews associated with the logged-in user
     books = Book.objects.filter(user=request.user)
     reviews = Review.objects.filter(user=request.user)
+
+    print("Books:", books)  # Debugging output
+    print("Reviews:", reviews)  # Debugging output
 
     return render(request, 'account.html', {
         'profile_form': profile_form,
         'password_form': password_form,
-        'books': books,  # Pass the books to the template
-        'reviews': reviews,  # Pass the reviews to the template
+        'books': books,
+        'reviews': reviews,
     })
 
 # Logout view
@@ -103,5 +103,3 @@ class TokenRefreshView(APIView):
             }, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({'detail': str(e)}, status=status.HTTP_400_BAD_REQUEST)
-
-
