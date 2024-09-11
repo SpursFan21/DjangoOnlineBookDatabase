@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account - Online Book Database</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <style>
+        .message {
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: none;
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 1000;
+        }
+        .message.success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .message.error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Online Book Database</h1>
+        <nav>
+            <ul>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'account' %}">Account</a></li>
+                <li><a href="{% url 'logout' %}">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <h2>Your Account</h2>
+            {% for message in messages %}
+                <div class="message {% if message.tags %}{{ message.tags }}{% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+            <form method="post">
+                {% csrf_token %}
+
+                <!-- Update Details -->
+                <fieldset>
+                    <legend>Update Details</legend>
+                    {{ profile_form.non_field_errors }}
+                    <div>
+                        {{ profile_form.username.label_tag }}
+                        {{ profile_form.username }}
+                        {{ profile_form.username.errors }}
+                    </div>
+                    <div>
+                        {{ profile_form.email.label_tag }}
+                        {{ profile_form.email }}
+                        {{ profile_form.email.errors }}
+                    </div>
+                </fieldset>
+
+                <!-- Change Password -->
+                <fieldset>
+                    <legend>Change Password</legend>
+                    {{ password_form.non_field_errors }}
+                    <div>
+                        {{ password_form.old_password.label_tag }}
+                        {{ password_form.old_password }}
+                        {{ password_form.old_password.errors }}
+                    </div>
+                    <div>
+                        {{ password_form.new_password1.label_tag }}
+                        {{ password_form.new_password1 }}
+                        <small>Your password must contain at least 8 characters, cannot be a commonly used password, and cannot be entirely numeric.</small>
+                        {{ password_form.new_password1.errors }}
+                    </div>
+                    <div>
+                        {{ password_form.new_password2.label_tag }}
+                        {{ password_form.new_password2 }}
+                        {{ password_form.new_password2.errors }}
+                    </div>
+                </fieldset>
+                
+                <button type="submit">Update</button>
+            </form>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Online Book Database. All rights reserved.</p>
+    </footer>
+    <script>
+        // JavaScript to show the messages and hide them after a few seconds
+        document.addEventListener('DOMContentLoaded', function() {
+            var messages = document.querySelectorAll('.message');
+            messages.forEach(function(message) {
+                message.style.display = 'block';
+                setTimeout(function() {
+                    message.style.display = 'none';
+                }, 5000); // Hide after 5 seconds
+            });
+        });
+    </script>
+</body>
+</html>

@@ -2,8 +2,6 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('', views.home, name='home'),
-    path('register/', views.register, name='register'),
-    path('login/', views.login, name='login'),
-    # Add other URL patterns here
+    # Placeholder path
+    path('', views.index, name='books_index'),
 ]
